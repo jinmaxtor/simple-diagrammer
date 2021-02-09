@@ -53,7 +53,7 @@ module.exports.models = {
      *                                                                          *
      ***************************************************************************/
 
-    migrate: 'alter',
+    migrate: 'drop', // drop, safe, alter
 
 
     /***************************************************************************
@@ -69,9 +69,9 @@ module.exports.models = {
      ***************************************************************************/
 
     attributes: {
-        createdAt: {type: 'number', autoCreatedAt: true,},
-        updatedAt: {type: 'number', autoUpdatedAt: true,},
-        id: {type: 'number', autoIncrement: true,},
+        id: {columnName: 'id', type: 'number', autoIncrement: true,},
+        createdAt: {columnName: 'created_at', type: 'number', autoCreatedAt: true,},
+        updatedAt: {columnName: 'updated_at', type: 'number', autoUpdatedAt: true,},
         //--------------------------------------------------------------------------
         //  /\   Using MongoDB?
         //  ||   Replace `id` above with this instead:
