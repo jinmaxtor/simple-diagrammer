@@ -1,37 +1,37 @@
 <div id="login" v-cloak>
     <div class="container-fluid pt-5 pb-5">
-        <h1 class="text-center">Sign in to your account</h1>
+        <h1 class="text-center">Inicie sesión en su cuenta</h1>
         <div style="max-width: 450px;" class="mx-auto">
             <hr/>
             <ajax-form action="login" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData"
                        :form-rules="formRules" :form-errors.sync="formErrors" @submitted="submittedForm()">
                 <div class="form-group">
-                    <input type="email" class="form-control" placeholder="Email address"
+                    <input type="email" class="form-control" placeholder="Correo"
                            :class="[formErrors.emailAddress ? 'is-invalid' : '']" v-model.trim="formData.emailAddress"
                            autocomplete="email" focus-first>
-                    <div class="invalid-feedback" v-if="formErrors.emailAddress">Please provide a valid email address.
+                    <div class="invalid-feedback" v-if="formErrors.emailAddress">Ingrese un correo válido.
                     </div>
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" placeholder="Password"
+                    <input type="password" class="form-control" placeholder="Contraseña"
                            :class="[formErrors.password ? 'is-invalid' : '']" v-model.trim="formData.password"
                            autocomplete="current-password">
-                    <div class="invalid-feedback" v-if="formErrors.password">Please enter your password.</div>
+                    <div class="invalid-feedback" v-if="formErrors.password">Ingrese su contraseña.</div>
                 </div>
                 <div class="form-group form-check">
                     <input class="form-check-input" type="checkbox" id="remember" name="rememberMe"
                            v-model="formData.rememberMe"/>
-                    <label class="form-check-label" for="remember">Remember me</label>
+                    <label class="form-check-label" for="remember">Recordar cuenta</label>
                 </div>
-                <cloud-error v-if="cloudError==='badCombo'">The credentials you entered are not associated with an
-                    account. Please check your email and/or password and try again.
+                <cloud-error v-if="cloudError==='badCombo'">Las credenciales ingresadas no estan asociadas con una
+                    cuenta, verifica tu correo o contraseña e inténtalo de nuevo.
                 </cloud-error>
                 <cloud-error v-else-if="cloudError"></cloud-error>
                 <div class="form-group">
-                    <ajax-button :syncing="syncing" class="btn-dark btn-lg btn-block">Sign in</ajax-button>
+                    <ajax-button :syncing="syncing" class="btn-dark btn-lg btn-block">Iniciar Sesión</ajax-button>
                 </div>
             </ajax-form>
-            <p class="text-center"><a href="/password/forgot">Forgot your password?</a></p>
+            <p class="text-center"><a href="/password/forgot">¿Olvidaste tu contraseña?</a></p>
         </div>
     </div>
 </div>

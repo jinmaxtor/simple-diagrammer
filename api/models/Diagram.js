@@ -7,7 +7,7 @@
 
 module.exports = {
 
-    tableName: 'diagrams',
+    tableName: 'diagramas',
 
     attributes: {
 
@@ -15,13 +15,25 @@ module.exports = {
         //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
         //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
 
-        title: {type: 'string'},
+        title: {
+            columnName: 'titulo',
+            type: 'string'
+        },
 
-        description: {type: 'string'},
+        description: {
+            columnName: 'descripcion',
+            type: 'string'
+        },
 
-        data: {type: 'string'},
+        data: {
+            columnName: 'datos',
+            type: 'string'
+        },
 
-        status: {type: 'number'},
+        status: {
+            columnName: 'estado',
+            type: 'number'
+        },
 
         //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
         //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
@@ -32,7 +44,7 @@ module.exports = {
         //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
         //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
         classSession: {
-            columnName: 'class_session_id',
+            columnName: 'sesion_id',
             model: 'ClassSession'
         }
     },

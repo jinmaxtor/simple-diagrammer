@@ -7,7 +7,7 @@
 
 module.exports = {
 
-    tableName: 'enrollments',
+    tableName: 'inscripciones',
 
     attributes: {
 
@@ -25,12 +25,12 @@ module.exports = {
         //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
         //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
         registeredUser: {
-            columnName: 'user_id',
+            columnName: 'usuario_id',
             model: 'User',
         },
 
         registeredSession: {
-            columnName: 'class_session_id',
+            columnName: 'sesion_id',
             model: 'ClassSession',
         }
     },

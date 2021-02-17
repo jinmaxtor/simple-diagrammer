@@ -34,7 +34,11 @@
 var cssFilesToInject = [
 
     // Bring in `.css` files for themes and style guides (e.g. Bootstrap, Foundation)
-    'dependencies/**/*.css',
+    // 'dependencies/**/*.css',
+    'dependencies/bootstrap-4/bootstrap-4.css',
+    'dependencies/fontawesome.css',
+
+    'dependencies/mxgraph/styles/grapheditor.css',
 
     // All of the rest of your custom `.css` files will be injected here,
     // in no particular order.  To customize the ordering, add additional
@@ -71,7 +75,31 @@ var jsFilesToInject = [
     'dependencies/jquery.min.js',
     'dependencies/vue.js',
     'dependencies/vue-router.js',
-    'dependencies/**/*.js',
+    'dependencies/parasails.js',
+    // 'dependencies/**/*.js',
+
+    'dependencies/bootstrap-4/bootstrap-4.bundle.js',
+    'dependencies/cloud.js',
+    'dependencies/moment.js',
+
+    'js/mxgraph-initializer.js',
+
+    'dependencies/mxgraph/js/Init.js',
+    'dependencies/mxgraph/deflate/pako.min.js',
+    'dependencies/mxgraph/deflate/base64.js',
+    'dependencies/mxgraph/jscolor/jscolor.js',
+    'dependencies/mxgraph/sanitizer/sanitizer.min.js',
+    'dependencies/mxgraph/mxClient.js',
+    'dependencies/mxgraph/js/EditorUi.js',
+    'dependencies/mxgraph/js/Editor.js',
+    'dependencies/mxgraph/js/Sidebar.js',
+    'dependencies/mxgraph/js/Graph.js',
+    'dependencies/mxgraph/js/Format.js',
+    'dependencies/mxgraph/js/Shapes.js',
+    'dependencies/mxgraph/js/Actions.js',
+    'dependencies/mxgraph/js/Menus.js',
+    'dependencies/mxgraph/js/Toolbar.js',
+    'dependencies/mxgraph/js/Dialogs.js',
 
     // First amongst the app-level files, bring in cloud configuration
     'js/cloud.setup.js',

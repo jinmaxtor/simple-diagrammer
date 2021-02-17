@@ -4,9 +4,9 @@
  * A user who can log in to this application.
  */
 
-module.exports = {
+var User = module.exports = {
 
-    tableName: 'users',
+    tableName: 'usuarios',
 
     migrate: 'drop',
 
@@ -17,7 +17,7 @@ module.exports = {
         //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
 
         fullName: {
-            columnName: 'full_name',
+            columnName: 'nombre_completo',
             type: 'string',
             required: true,
             description: 'Full representation of the user\'s name.',
@@ -26,7 +26,7 @@ module.exports = {
         },
 
         emailAddress: {
-            columnName: 'email_address',
+            columnName: 'correo_electronico',
             type: 'string',
             required: true,
             unique: true,
@@ -45,13 +45,13 @@ module.exports = {
         },
 
         isSuperAdmin: {
-            columnName: 'is_super_admin',
+            columnName: 'es_super_usuario',
             type: 'boolean',
             description: 'Whether this user is a "super admin" with extra permissions, etc.'
         },
 
         lastSeenAt: {
-            columnName: 'last_seen_at',
+            columnName: 'fecha_ultima_sesion',
             type: 'number',
             columnType: 'bigint',
             description: 'A JS timestamp (epoch ms) representing the moment at which this user most recently interacted with the backend while logged in (or 0 if they have not interacted with the backend at all yet).',
@@ -59,7 +59,7 @@ module.exports = {
         },
 
         type: {
-            columnName: 'type',
+            columnName: 'tipo',
             type: 'string',
             columnType: 'enum(\'Docente\', \'Estudiante\')',
         },

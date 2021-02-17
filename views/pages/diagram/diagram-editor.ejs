@@ -1,0 +1,107 @@
+<div id="diagram-editor" v-cloak>
+    <div id="editorContainer" class="geEditor editor-container"></div>
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser(); %>
+<script type="text/javascript">
+    function initializeEditor() {
+        /*var editorUiInit = EditorUi.prototype.init;
+
+        EditorUi.prototype.init = function () {
+            editorUiInit.apply(this, arguments);
+            this.actions.get('export').setEnabled(false);
+
+            // Updates action states which require a backend
+            if (!Editor.useLocalStorage) {
+                mxUtils.post(OPEN_URL, '', mxUtils.bind(this, function (req) {
+                    // var enabled = req.getStatus() != 404;
+                    var enabled = true;
+                    this.actions.get('open').setEnabled(enabled || Graph.fileSupport);
+                    this.actions.get('import').setEnabled(enabled || Graph.fileSupport);
+                    this.actions.get('save').setEnabled(enabled);
+                    this.actions.get('saveAs').setEnabled(enabled);
+                    this.actions.get('export').setEnabled(enabled);
+                }));
+            }
+        };*/
+
+        // Adds required resources (disables loading of fallback properties, this can only
+        // be used if we know that all keys are defined in the language specific file)
+        mxResources.loadDefaultBundle = false;
+        var bundle = mxResources.getDefaultBundle(RESOURCE_BASE, mxLanguage) ||
+            mxResources.getSpecialBundle(RESOURCE_BASE, mxLanguage);
+
+        // Fixes possible asynchronous requests
+        mxUtils.getAll([bundle, STYLE_PATH + '/default.xml'], function (xhr) {
+            // Adds bundle text to resources
+            mxResources.parse(xhr[0].getText());
+
+            // Configures the default graph theme
+            var themes = {};
+            themes[Graph.prototype.defaultThemeName] = xhr[1].getDocumentElement();
+
+            // Main
+            let editorContainer = document.getElementById('editorContainer');
+            editor = new EditorUi(new Editor(urlParams['chrome'] == '0', themes), editorContainer, undefined, sendDiagramData);
+
+            document.body.insertAdjacentHTML("beforeend", '<button id="testButton" class="test-button">Boton holas</button>');
+            let testButton = document.getElementById('testButton');
+            testButton.addEventListener("click", ev => {
+                testbuttonAction();
+            });
+        }, function () {
+            document.body.innerHTML = '<center style="margin-top:10%;">Error loading resource files. Please check browser console.</center>';
+        });
+    }
+
+    function testbuttonAction() {
+        editor.getXml();
+    }
+
+    async function sendDiagramData(diagramData) {
+        try {
+            const endPoint = `/diagram/sendDiagramData`;
+            /*const requestConfig = {
+                method: 'POST',
+                body: JSON.stringify({diagramData: diagramData, _csrf: window.SAILS_LOCALS._csrf}),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            };
+            let request = await fetch(endPoint, requestConfig);
+            let response = await request.json();*/
+
+            io.socket.post(endPoint, {
+                diagramData: diagramData,
+                _csrf: window.SAILS_LOCALS._csrf
+            }, function (resData, jwres) {
+                console.debug('resData: ', resData);
+                console.debug('jwres: ', jwres);
+            });
+            // console.debug('sendMessage response: ', response);
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    // Extends EditorUi to update I/O action states based on availability of backend
+    var editor = null;
+
+    window.addEventListener('load', function () {
+
+        io.socket.on('newUserJoined', data => {
+            console.debug('data: ', data);
+        });
+
+        io.socket.on('sendDiagramData', data => {
+            console.debug('received data: ', data);
+            editor.setXml(data);
+        });
+
+        io.socket.get('/diagram/start', (body, response) => {
+            console.debug('body: ', body, ' response: ', response);
+        });
+
+        initializeEditor();
+    });
+
+</script>

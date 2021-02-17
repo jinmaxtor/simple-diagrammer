@@ -1,0 +1,40 @@
+<div class="container">
+    <p>Texto de ejemplo</p>
+</div>
+
+<script>
+    window.addEventListener('load', ev => {
+        io.socket.on('subscribe', data => {
+            console.debug('data: ', data);
+        });
+
+        io.socket.on('sendMessage', data => {
+            console.debug('data: ', data);
+        });
+
+        io.socket.get('/test/subscribe', (body, response) => {
+            console.debug('body: ', body, ' response: ', response);
+        });
+
+
+    });
+
+    async function sendMessage(text) {
+        try {
+            const endPoint = `/test/sendMessage`;
+            const requestConfig = {
+                method: 'POST',
+                body: JSON.stringify({text: text, _csrf: window.SAILS_LOCALS._csrf}),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            };
+            let request = await fetch(endPoint, requestConfig);
+            let response = await request.json();
+            console.debug('sendMessage response: ', response);
+        } catch (e) {
+            console.error(e);
+        }
+    }
+</script>
+<%- exposeLocalsToBrowser(); %>

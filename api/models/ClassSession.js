@@ -7,7 +7,7 @@
 
 module.exports = {
 
-    tableName: 'class_sessions',
+    tableName: 'sesiones',
 
     attributes: {
 
@@ -16,26 +16,31 @@ module.exports = {
         //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
 
         title: {
+            columnName: 'titulo',
             type: 'string',
             required: true,
             maxLength: 255,
         },
 
         description: {
+            columnName: 'descripcion',
             type: 'string',
         },
 
         startDate: {
-            columnName: 'start_date',
+            columnName: 'fecha_inicio',
             type: 'number'
         },
 
         endDate: {
-            columnName: 'end_date',
+            columnName: 'fecha_fin',
             type: 'number'
         },
 
-        status: {type: 'number'},
+        status: {
+            columnName: 'estado',
+            type: 'number'
+        },
 
         //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
         //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
@@ -46,7 +51,7 @@ module.exports = {
         //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
         //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
         owner: {
-            columnName: 'created_by',
+            columnName: 'creador_id',
             model: 'User',
         },
 

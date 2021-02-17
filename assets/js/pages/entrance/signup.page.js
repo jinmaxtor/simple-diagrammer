@@ -17,6 +17,7 @@ parasails.registerPage('signup', {
             password: {required: true},
             confirmPassword: {required: true, sameAs: 'password'},
             agreed: {required: true},
+            type: {required: true},
         },
 
         // Syncing / loading state
