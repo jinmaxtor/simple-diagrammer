@@ -15,6 +15,8 @@ Cloud.setup({
     /* eslint-disable */
     methods: {
         'confirmEmail': {'verb': 'GET', 'url': '/email/confirm', 'args': ['token']},
+        'sendDiagramData': {'verb': 'POST', 'url': '/diagram/sendDiagramData', 'args': ['diagramData']},
+        'create': {'verb': 'POST', 'url': '/class-session/create', 'args': ['title', 'description']},
         'logout': {'verb': 'GET', 'url': '/api/v1/account/logout', 'args': []},
         'updatePassword': {'verb': 'PUT', 'url': '/api/v1/account/update-password', 'args': ['password']},
         'updateProfile': {'verb': 'PUT', 'url': '/api/v1/account/update-profile', 'args': ['fullName', 'emailAddress']},
@@ -24,7 +26,11 @@ Cloud.setup({
             'args': ['stripeToken', 'billingCardLast4', 'billingCardBrand', 'billingCardExpMonth', 'billingCardExpYear']
         },
         'login': {'verb': 'PUT', 'url': '/api/v1/entrance/login', 'args': ['emailAddress', 'password', 'rememberMe']},
-        'signup': {'verb': 'POST', 'url': '/api/v1/entrance/signup', 'args': ['emailAddress', 'password', 'fullName']},
+        'signup': {
+            'verb': 'POST',
+            'url': '/api/v1/entrance/signup',
+            'args': ['emailAddress', 'password', 'fullName', 'type']
+        },
         'sendPasswordRecoveryEmail': {
             'verb': 'POST',
             'url': '/api/v1/entrance/send-password-recovery-email',

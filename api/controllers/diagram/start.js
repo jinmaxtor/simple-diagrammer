@@ -7,7 +7,12 @@ module.exports = {
     description: 'Start diagram.',
 
 
-    inputs: {},
+    inputs: {
+        sessionId: {
+            required: true,
+            type: 'string',
+        }
+    },
 
 
     exits: {
@@ -23,8 +28,12 @@ module.exports = {
             return exits.badRequest({error: 'La solicitud debe ser de tipo web socket'});
         }
 
-        sails.sockets.join(this.req, 'testDiagramSession');
-        sails.sockets.broadcast('testDiagramSession', 'newUserJoined', {message: 'El usuario aaa aca de unirse a la sesión'}, this.req);
+        console.debug('sessionId: ', inputs.sessionId);
+
+        // sails.sockets.join(this.req, 'testDiagramSession');
+        sails.sockets.join(this.req, inputs.sessionId);
+        // sails.sockets.broadcast('testDiagramSession', 'newUserJoined', {message: 'El usuario aaa acaba de unirse a la sesión'}, this.req);
+        sails.sockets.broadcast(inputs.sessionId, 'newUserJoined', {message: 'El usuario aaa acaba de unirse a la sesión'}, this.req);
 
         return this.res.json({message: 'Se unió a la sesión correctamente'});
     }

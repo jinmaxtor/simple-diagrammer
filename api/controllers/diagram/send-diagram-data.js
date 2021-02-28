@@ -12,14 +12,19 @@ module.exports = {
             type: 'string',
             required: true,
         },
+        sessionId: {
+            type: 'string',
+            required: true,
+        },
     },
 
 
     exits: {},
 
 
-    fn: async function ({diagramData}) {
-        sails.sockets.broadcast('testDiagramSession', 'sendDiagramData', diagramData, this.req);
+    fn: async function ({diagramData, sessionId}) {
+        // sails.sockets.broadcast('testDiagramSession', 'sendDiagramData', diagramData, this.req);
+        sails.sockets.broadcast(sessionId, 'sendDiagramData', diagramData, this.req);
         return this.res.ok({message: 'datos del diagrama enviados correctamente'});
     }
 

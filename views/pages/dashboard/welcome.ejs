@@ -1,12 +1,25 @@
-<div id="welcome">
+<div id="welcome" xmlns="http://www.w3.org/1999/html">
     <div class="container pt-5 pb-5">
-        <h1>Welcome!</h1>
+        <h1>Bienvenido! <%- me.type; %> <%- me.fullName; %></h1>
         <hr/>
-        <p>This is a page that only logged-in people can visit. Don't you feel special? Try clicking on a button below
-            to do some things you can't do when you're logged out.</p>
+        <% if (me && me.type === 'Docente') { %>
+            <p>Registre una nueva sesión de clases para empezar a diagramar en tiempo real.</p>
+        <% } %>
+
+        <% if (me && me.type === 'Estudiante') { %>
+            <p>Unete a una sesión y empieza a ver los diagramas diseñados por el anfitrion.</p>
+        <% } %>
+
         <div class="buttons">
-            <a class="btn btn-info" href="/account/profile">Update my email</a>
-            <button class="btn btn-outline-info ml-2" @click="clickOpenExampleModalButton()">Open a modal</button>
+            <a class="btn btn-info" href="/account/profile">Datos personales</a>
+            <% if (me && me.type === 'Docente') { %>
+                <button class="btn btn-outline-info ml-2" @click="showModalCreateDiagram()">Nueva Sesión</button>
+            <% } %>
+
+            <% if (me && me.type === 'Estudiante') { %>
+                <button class="btn btn-outline-info ml-2" @click="showModalJoinDiagram()">Unirse a Sesión</button>
+            <% } %>
+
         </div>
     </div>
 
@@ -15,130 +28,82 @@
     <!--  ╔═╗═╗ ╦╔═╗╔╦╗╔═╗╦  ╔═╗  ┌┬┐┌─┐┌┬┐┌─┐┬
           ║╣ ╔╩╦╝╠═╣║║║╠═╝║  ║╣   ││││ │ ││├─┤│
           ╚═╝╩ ╚═╩ ╩╩ ╩╩  ╩═╝╚═╝  ┴ ┴└─┘─┴┘┴ ┴┴─┘  -->
-    <modal class="example-modal" v-if="modal==='example'" @close="closeExampleModal()" v-cloak>
+    <modal class="example-modal" v-if="modal==='createDiagram'" @close="closeExampleModal()" v-cloak>
         <div class="modal-header">
-            <h2 class="modal-title">Example modal</h2>
-            <p class="modal-intro">At your leisure, please peruse this excerpt from a whale of a tale.</p>
+            <h2 class="modal-title">Nueva Sesión de Diagrama</h2>
+            <p class="modal-intro">Ingrese los datos requeridos para iniciar una nueva sesión de diagrama.</p>
             <hr>
         </div>
         <div class="modal-body">
-            <h5 class="pb-2 mb-3 border-bottom">Chapter 1: Loomings.</h5>
-            <p>Call me Ishmael. Some years ago—never mind how long precisely—having little or no money in my purse, and
-                nothing particular to interest me on shore, I thought I would sail about a little and see the watery
-                part of the world. It is a way I have of driving off the spleen and regulating the circulation. Whenever
-                I find myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever
-                I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral
-                I meet; and especially whenever my hypos get such an upper hand of me, that it requires a strong moral
-                principle to prevent me from deliberately stepping into the street, and methodically knocking people's
-                hats off—then, I account it high time to get to sea as soon as I can. This is my substitute for pistol
-                and ball. With a philosophical flourish Cato throws himself upon his sword; I quietly take to the ship.
-                There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or
-                other, cherish very nearly the same feelings towards the ocean with me.</p>
             <div class="js-timestamp-examples">
-                <h5 class="pt-4 pb-2 mb-3 border-bottom">About 2 years ago</h5>
-                <p>
-                    <js-timestamp :at="pageLoadedAt-(2*365*24*60*60*1000)"></js-timestamp>
-                    <br/>
-                    <js-timestamp :at="pageLoadedAt-(2*365*24*60*60*1000)" format="timeago" short="true"></js-timestamp>
-                    <br/>
-                    <js-timestamp :at="pageLoadedAt-(2*365*24*60*60*1000)" format="calendar"></js-timestamp>
-                    <br/>
-                </p>
-                <h5 class="pt-4 pb-2 mb-3 border-bottom">About 2 months ago</h5>
-                <p>
-                    <js-timestamp :at="pageLoadedAt-(2*30*24*60*60*1000)"></js-timestamp>
-                    <br/>
-                    <js-timestamp :at="pageLoadedAt-(2*30*24*60*60*1000)" format="timeago" short="true"></js-timestamp>
-                    <br/>
-                    <js-timestamp :at="pageLoadedAt-(2*30*24*60*60*1000)" format="calendar"></js-timestamp>
-                    <br/>
-                </p>
-                <h5 class="pt-4 pb-2 mb-3 border-bottom">2 days ago</h5>
-                <p>
-                    <js-timestamp :at="pageLoadedAt-(2*24*60*60*1000)"></js-timestamp>
-                    <br/>
-                    <js-timestamp :at="pageLoadedAt-(2*24*60*60*1000)" format="timeago" short="true"></js-timestamp>
-                    <br/>
-                    <js-timestamp :at="pageLoadedAt-(2*24*60*60*1000)" format="calendar"></js-timestamp>
-                    <br/>
-                </p>
-                <h5 class="pt-4 pb-2 mb-3 border-bottom">2 hours ago</h5>
-                <p>
-                    <js-timestamp :at="pageLoadedAt-(2*60*60*1000)"></js-timestamp>
-                    <br/>
-                    <js-timestamp :at="pageLoadedAt-(2*60*60*1000)" format="timeago" short="true"></js-timestamp>
-                    <br/>
-                    <js-timestamp :at="pageLoadedAt-(2*60*60*1000)" format="calendar"></js-timestamp>
-                    <br/>
-                </p>
-                <h5 class="pt-4 pb-2 mb-3 border-bottom">15 minutes ago</h5>
-                <p>
-                    <js-timestamp :at="pageLoadedAt-(15*60*1000)"></js-timestamp>
-                    <br/>
-                    <js-timestamp :at="pageLoadedAt-(15*60*1000)" format="timeago" short="true"></js-timestamp>
-                    <br/>
-                    <js-timestamp :at="pageLoadedAt-(15*60*1000)" format="calendar"></js-timestamp>
-                    <br/>
-                </p>
-                <h5 class="pt-4 pb-2 mb-3 border-bottom">45 seconds ago</h5>
-                <p>
-                    <js-timestamp :at="pageLoadedAt-(45*1000)"></js-timestamp>
-                    <br/>
-                    <js-timestamp :at="pageLoadedAt-(45*1000)" format="timeago" short="true"></js-timestamp>
-                    <br/>
-                    <js-timestamp :at="pageLoadedAt-(45*1000)" format="calendar"></js-timestamp>
-                    <br/>
-                </p>
-                <h5 class="pt-4 pb-2 mb-3 border-bottom">Right now</h5>
-                <p>
-                    <js-timestamp :at="pageLoadedAt"></js-timestamp>
-                    <br/>
-                    <js-timestamp :at="pageLoadedAt" format="timeago" short="true"></js-timestamp>
-                    <br/>
-                    <js-timestamp :at="pageLoadedAt" format="calendar"></js-timestamp>
-                    <br/>
-                </p>
-                <h5 class="pt-4 pb-2 mb-3 border-bottom">In an hour</h5>
-                <p>
-                    <js-timestamp :at="pageLoadedAt+(60*60*1000)"></js-timestamp>
-                    <br/>
-                    <js-timestamp :at="pageLoadedAt+(60*60*1000)" format="timeago" short="true"></js-timestamp>
-                    <br/>
-                    <js-timestamp :at="pageLoadedAt+(60*60*1000)" format="calendar"></js-timestamp>
-                    <br/>
-                </p>
-                <h5 class="pt-4 pb-2 mb-3 border-bottom">In two days</h5>
-                <p>
-                    <js-timestamp :at="pageLoadedAt+(2*24*60*60*1000)"></js-timestamp>
-                    <br/>
-                    <js-timestamp :at="pageLoadedAt+(2*24*60*60*1000)" format="timeago" short="true"></js-timestamp>
-                    <br/>
-                    <js-timestamp :at="pageLoadedAt+(2*24*60*60*1000)" format="calendar"></js-timestamp>
-                    <br/>
-                </p>
-                <h5 class="pt-4 pb-2 mb-3 border-bottom">In about two months</h5>
-                <p>
-                    <js-timestamp :at="pageLoadedAt+(2*30*24*60*60*1000)"></js-timestamp>
-                    <br/>
-                    <js-timestamp :at="pageLoadedAt+(2*30*24*60*60*1000)" format="timeago" short="true"></js-timestamp>
-                    <br/>
-                    <js-timestamp :at="pageLoadedAt+(2*30*24*60*60*1000)" format="calendar"></js-timestamp>
-                    <br/>
-                </p>
-                <h5 class="pt-4 pb-2 mb-3 border-bottom">In about two years</h5>
-                <p>
-                    <js-timestamp :at="pageLoadedAt+(2*365*24*60*60*1000)"></js-timestamp>
-                    <br/>
-                    <js-timestamp :at="pageLoadedAt+(2*365*24*60*60*1000)" format="timeago" short="true"></js-timestamp>
-                    <br/>
-                    <js-timestamp :at="pageLoadedAt+(2*365*24*60*60*1000)" format="calendar"></js-timestamp>
-                    <br/>
-                </p>
+                <ajax-form action="create" :syncing.sync="syncing" :cloud-error.sync="cloudError"
+                           :form-errors.sync="formErrors" :form-data="formData" :form-rules="formRules"
+                           v-if="!cloudSuccess"
+                           @submitted="submittedForm($event)">
+                    <div class="form-group">
+                        <label for="title">Titulo</label>
+                        <input class="form-control" id="title" type="text"
+                               :class="[formErrors.title ? 'is-invalid' : '']" v-model.trim="formData.title"
+                               placeholder="Diagrama de ejemplo" autocomplete="title" focus-first>
+                        <div class="invalid-feedback" v-if="formErrors.title">Ingrese el titulo.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email-address">Descripción</label>
+                        <input class="form-control" id="description" type="text"
+                               :class="[formErrors.description ? 'is-invalid' : '']" v-model.trim="formData.description"
+                               placeholder="Descripción" autocomplete="description">
+                        <div class="invalid-feedback" v-if="formErrors.description">Ingrese la descripción.</div>
+                    </div>
+                    <div class="form-group">
+                        <ajax-button type="submit" :syncing="syncing" class="btn-dark btn-lg btn-block">Nuevo diagrama
+                        </ajax-button>
+                    </div>
+                </ajax-form>
+                <div v-if="cloudSuccess">
+                    <p>Diagrama creado correctamente: </p>
+                    <b>Titulo: </b>
+                    <p>{{formData.title}}</p>
+                    <b>Descripción: </b>
+                    <p>{{formData.description}}</p>
+                    <b>Código de la sesión: </b>
+                    <div style="display: flex;">
+                        <input id="sessionId" class="form-control" style="width: 100%" type="text" readonly
+                               v-model="formData.sessionId">
+                        <button type="button" v-on:click="copySessionId" class="btn btn-outline-info">Copiar</button>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="modal-footer flex-row-reverse justify-content-between">
-            <button type="button" data-dismiss="modal" class="btn btn-info">Close</button>
-            <button type="button" data-dismiss="modal" class="btn btn-outline-info">Cancel</button>
+            <button type="button" v-on:click="gotoDiagramEditor"
+                    v-bind:style="{visibility: cloudSuccess ? 'visible' : 'hidden'}" class="btn btn-info">
+                Iniciar
+            </button>
+            <button type="button" data-dismiss="modal" class="btn btn-outline-info">Cancelar</button>
+        </div>
+    </modal>
+
+
+    <modal class="example-modal" v-if="modal==='joinDiagram'" @close="closeExampleModal()" v-cloak>
+        <div class="modal-header">
+            <h2 class="modal-title">Unirse a una Sesión de Diagrama</h2>
+            <p class="modal-intro">Ingrese el codigo de la sesión para iniciar.</p>
+            <hr>
+        </div>
+        <div class="modal-body">
+            <div class="js-timestamp-examples">
+                <div class="form-group">
+                    <label for="title">Código de sesión</label>
+                    <input class="form-control" id="sessionId" type="text"
+                           placeholder="" autocomplete="title" focus-first>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer flex-row-reverse justify-content-between">
+            <button type="button" v-on:click="joinSession" class="btn btn-info">
+                Iniciar
+            </button>
+            <button type="button" data-dismiss="modal" class="btn btn-outline-info">Cancelar</button>
         </div>
     </modal>
 </div>
